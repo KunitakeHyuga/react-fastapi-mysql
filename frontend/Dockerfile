@@ -3,10 +3,14 @@ FROM node:latest
 WORKDIR /app
 
 COPY package.json package-lock.json ./
-RUN npm install && chmod -R 755 node_modules
-RUN chmod +x node_modules/.bin/react-scripts
+RUN npm install
 
+# 開発環境用の設定
+ENV CHOKIDAR_USEPOLLING=true
+ENV WATCHPACK_POLLING=true
 
 COPY . .
 
-CMD ["npm", "start"]
+EXPOSE 3000
+
+CMD ["npm", "run", "dev"]
